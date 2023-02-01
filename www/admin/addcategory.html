@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,11 +34,44 @@
       };
    </script>
 </head>
+
 <body>
    <div w3-include-html="sidebar.html"></div>
    <div w3-include-html="navbar.html"></div>
    <main class="wrapper">
-   <div w3-include-html="footer.html"></div>
+      <section>
+         <div class="container-fluid px-md-4">
+            <header class="mb-5">
+               <h3 class="title-pages fw-bold">Category</h3>
+            </header>
+            <div class="row">
+               <div class="col-12">
+                  <div class="form-group">
+                     <label for="id_category">Category</label>
+                     <input type="text" class="form-control" name="category" id="category"
+                        value="">
+                     <div class="invalid-feedback">
+
+                     </div>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="product">Category status</label>
+                     <input type="text" class="form-control" name="status" id="status" value="">
+                     <div class="invalid-feedback">
+                  </div>
+
+                  <a href="category.html" class="btn btn-md btn-primary">Cancel</a>
+                  <button type="submit" class="btn btn-md btn-primary" onclick="postcategoryapi()">Save</button>
+                  <div id="message">
+                  </div>
+
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <div w3-include-html="footer.html"></div>
    </main>
    <div w3-include-html="navdown.html"></div>
    <script src="/www/admin//ui/jquery-3.6.1/jquery-3.6.1.min.js"></script>
@@ -61,7 +95,30 @@
       [].forEach.call(document.querySelectorAll("*"), function (a) {
       });
    </script>
- 
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script>
+      function postcategoryapi() {
+         alert("simpan category");
+         var bodyFormData = new FormData();
+         bodyFormData.append('category', document.getElementById('category').value)
+         bodyFormData.append('status', document.getElementById('status').value)
+         axios({
+            method: 'post',
+            url: `http://127.0.0.1:8000/api/postproductcategory`,
+            data: bodyFormData,
+
+         })
+            .then(response => {
+
+               document.getElementById("message").innerHTML = response.data.status;
+            })
+            .catch(function (err) {
+               console.log(err);
+            });
+      }
+
+   </script>
+
 </body>
- 
+
 </html>
